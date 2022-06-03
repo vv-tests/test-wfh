@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <section id="profile-edit">
+    <div class="ion-padding">
+      <form [formGroup]="form">
+        <ion-list>
+          <ion-item class="ion-margin-bottom">
+            <ion-radio-group
+              formControlName="notifications"
+              allow-empty-selection
+              value="anchovies"
+              (ionChange)="submit($event)"
+            >
+              <ion-list-header>
+                <ion-label>Notification</ion-label>
+              </ion-list-header>
+              <ng-container *ngFor="let op of options">
+                <ion-item style="background-color: red">
+                  <ion-label>{{op}}</ion-label>
+                  <ion-radio
+                    slot="end"
+                    color="primary"
+                    value="{{op}}"
+                  ></ion-radio>
+                </ion-item>
+              </ng-container>
+            </ion-radio-group>
+          </ion-item>
+          <ion-list-header>Emails</ion-list-header>
+          <ion-item *ngFor="let op of options;let RowIndex=index">
+            <ion-label>{{op}}</ion-label>
+            <ion-checkbox
+              (ionChange)="submit($event,RowIndex)"
+              slot="end"
+              [checked]="form.get('emails').value === op"
+            ></ion-checkbox>
+          </ion-item>
+        </ion-list>
+      </form>
+    </div>
+  </section>
+</ion-content>

@@ -1,0 +1,100 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>home</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <ion-card *ngIf="currentUser?.id">
+      <ion-grid class="ion-margin-top">
+        <ion-row>
+          <ion-col size="9"></ion-col>
+          <ion-col size="3">
+            <ion-button
+              style="margin-right: 10rem"
+              color="danger"
+              (click)="clear()"
+            >
+              Clear
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-card-header>
+              <ion-card-title
+                ><span>Id</span>:
+                <span>{{currentUser?.id}}</span></ion-card-title
+              >
+
+              <ion-card-subtitle
+                ><span>Name</span>:
+                <span>{{currentUser?.name}}</span></ion-card-subtitle
+              >
+              <ion-card-subtitle
+                ><span>Gender</span>:
+                <span>{{currentUser?.gender}}</span></ion-card-subtitle
+              >
+              <ion-card-subtitle
+                ><span>Age</span>:
+                <span>{{currentUser?.age}}</span></ion-card-subtitle
+              >
+              <ion-card-subtitle
+                ><span>Message</span>:
+                <span>{{currentUser?.message}}</span></ion-card-subtitle
+              >
+            </ion-card-header>
+
+            <ion-card-content>
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <ion-row (click)="dislike(currentUser?.id)">
+                      <ion-icon name="close-circle-outline"></ion-icon>
+                      <h3>Dislike</h3>
+                    </ion-row>
+                  </ion-col>
+                  <ion-col>
+                    <ion-row (click)="like(currentUser?.id)">
+                      <ion-icon name="checkmark-circle-outline"></ion-icon>
+                      <h3>Like</h3>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-card-content>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+    <div *ngIf="!currentUser?.id">
+      <ion-grid class="ion-margin-top">
+        <ion-row>
+          <ion-col size="9"></ion-col>
+          <ion-col size="3">
+            <ion-button
+              style="margin-right: 10rem"
+              color="danger"
+              (click)="clear()"
+            >
+              Clear
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid class="ion-margin">
+        <ion-row>
+          <ion-col>
+            <h1 id="div2">No matches</h1>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+</ion-content>

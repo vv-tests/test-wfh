@@ -1,0 +1,131 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>my-profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <section *ngIf="!isFormVisible" id="profile-view">
+    <ion-grid>
+      <ion-row class="ion-padding">
+        <ion-col class="" size="4">Name</ion-col>
+        <ion-col size="2">:</ion-col>
+        <ion-col size="4">{{me?.name}}</ion-col>
+      </ion-row>
+      <ion-row class="ion-padding">
+        <ion-col class="" size="4">Gender</ion-col>
+        <ion-col size="2">:</ion-col>
+        <ion-col size="4">{{me?.gender}}</ion-col>
+      </ion-row>
+      <ion-row class="ion-padding">
+        <ion-col class="" size="4">Age</ion-col>
+        <ion-col size="2">:</ion-col>
+        <ion-col size="4">{{me?.age}}</ion-col>
+      </ion-row>
+      <ion-row class="ion-padding">
+        <ion-col class="" size="4">About me</ion-col>
+        <ion-col size="2">:</ion-col>
+        <ion-col size="4">{{me?.aboutMe}}</ion-col>
+      </ion-row>
+      <ion-row class="ion-padding">
+        <ion-col class="" size="2"></ion-col>
+        <ion-col size="6"
+          ><ion-button style="width: 100%" (click)="edit()"
+            >Edit</ion-button
+          ></ion-col
+        >
+        <ion-col size="2"></ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+  <section *ngIf="isFormVisible" id="profile-edit">
+    <div class="ion-padding">
+      <form [formGroup]="form" (ngSubmit)="saveDetails()">
+        <ion-list>
+          <ion-item class="ion-margin-bottom">
+            <ion-label position="floating">Your Name</ion-label>
+            <ion-input type="text" formControlName="name"></ion-input>
+          </ion-item>
+          <div class="red" *ngIf="invalid('name')">
+            <small *ngIf="(form.get('name')).errors?.required"
+              >Name is required</small
+            >
+            <!--question mark(?) is a safe navigation operator-->
+            <small *ngIf="(form.get('name')).errors?.minlength"
+              >Please enter more than 4 character</small
+            >
+          </div>
+          <!-- Gender -->
+          <ion-item class="ion-margin-bottom">
+            <!-- <ion-label position="floating">Gender</ion-label> -->
+            <ion-radio-group
+              formControlName="gender"
+              allow-empty-selection
+              value="anchovies"
+            >
+              <ion-list-header>
+                <ion-label>Gender</ion-label>
+              </ion-list-header>
+              <ion-item *ngFor="let gender of genders">
+                <ion-label>{{gender}}</ion-label>
+                <ion-radio
+                  slot="end"
+                  color="primary"
+                  value="{{gender}}"
+                ></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-item>
+          <div class="red" *ngIf="invalid('gender')">
+            <small *ngIf="(form.get('gender')).errors?.required"
+              >Gender is required</small
+            >
+          </div>
+
+          <!-- age -->
+
+          <ion-item class="ion-margin-bottom">
+            <ion-label position="floating">Your Age</ion-label>
+            <ion-input type="number" formControlName="age"></ion-input>
+          </ion-item>
+          <div class="red" *ngIf="invalid('age')">
+            <small *ngIf="(form.get('age')).errors?.required"
+              >Age is required</small
+            >
+
+            <small
+              *ngIf="(form.get('age')).errors?.min||(form.get('age')).errors?.max"
+              >Please enter a valid age</small
+            >
+          </div>
+
+          <ion-item class="ion-margin-bottom">
+            <ion-label position="floating">About me</ion-label>
+
+            <ion-textarea
+              rows="3"
+              formControlName="aboutMe"
+              cols="20"
+              placeholder="Please describe yourself..."
+            ></ion-textarea>
+          </ion-item>
+          <div class="red" *ngIf="invalid('aboutMe')">
+            <small *ngIf="(form.get('aboutMe')).errors?.required"
+              >About me is required</small
+            >
+
+            <small *ngIf="(form.get('aboutMe')).errors?.minlength"
+              >About me should be more than 10 characters</small
+            >
+          </div>
+          <ion-item class="ion-float-center" lines="none">
+            <ion-button color="primary" type="submit">Save Details</ion-button>
+          </ion-item>
+        </ion-list>
+      </form>
+    </div>
+  </section>
+</ion-content>
